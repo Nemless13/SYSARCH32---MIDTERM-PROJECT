@@ -1,530 +1,466 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>RentNow — Find Your Space</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;0,900;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
-    :root {
-      --green-dark: #1a3c2e;
-      --green-mid: #2d6a4f;
-      --green-light: #52b788;
-      --green-pale: #b7e4c7;
-      --green-mist: #f0faf4;
-      --accent: #f4a261;
-      --white: #ffffff;
-      --gray: #6b7280;
-      --text: #111827;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--green-mist); color: var(--text); min-height: 100vh; }
+    :root{--ink:#0d1f15;--forest:#1b4332;--moss:#2d6a4f;--fern:#40916c;--sage:#74c69d;--mist:#d8f3dc;--cream:#f8f4ee;--parchment:#f0ebe0;--terracotta:#e76f51;--white:#ffffff;--gray:#6b7280;}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--ink);}
 
     /* NAV */
-    nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1.2rem 2.5rem;
-      background: var(--white);
-      box-shadow: 0 1px 8px rgba(0,0,0,0.07);
-      position: sticky; top: 0; z-index: 100;
-    }
-    .logo { font-family: 'Playfair Display', serif; font-size: 1.7rem; color: var(--green-dark); letter-spacing: -0.5px; }
-    .logo span { color: var(--green-light); }
-    .nav-links { display: flex; gap: 1rem; }
-    .nav-links a {
-      text-decoration: none; padding: 0.5rem 1.2rem; border-radius: 8px;
-      font-weight: 500; font-size: 0.9rem; transition: all 0.2s;
-    }
-    .nav-links a.login { color: var(--green-dark); border: 1.5px solid var(--green-mid); }
-    .nav-links a.login:hover { background: var(--green-mid); color: white; }
-    .nav-links a.register { background: var(--green-mid); color: white; }
-    .nav-links a.register:hover { background: var(--green-dark); }
+    nav{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 3rem;position:sticky;top:0;z-index:100;background:rgba(248,244,238,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(45,106,79,0.1);}
+    .logo{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:900;color:var(--forest);text-decoration:none;letter-spacing:-0.5px;}
+    .logo span{color:var(--terracotta);}
+    .nav-right{display:flex;align-items:center;gap:0.5rem;}
+    .btn-nav-ghost{padding:0.5rem 1.2rem;border-radius:100px;border:1.5px solid transparent;color:var(--forest);font-weight:500;font-size:0.88rem;background:none;cursor:pointer;font-family:'Outfit',sans-serif;}
+    .btn-nav-ghost:hover{border-color:var(--fern);background:rgba(64,145,108,0.06);}
+    .btn-nav-solid{padding:0.5rem 1.3rem;border-radius:100px;background:var(--forest);color:white;font-weight:600;font-size:0.88rem;border:none;cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.2s;}
+    .btn-nav-solid:hover{background:var(--moss);}
 
     /* HERO */
-    .hero {
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; padding: 5rem 2rem 3rem;
-      background: linear-gradient(160deg, var(--green-dark) 0%, var(--green-mid) 60%, var(--green-light) 100%);
-      color: white; position: relative; overflow: hidden;
-    }
-    .hero::before {
-      content: ''; position: absolute; inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-      pointer-events: none;
-    }
-    .hero-badge {
-      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 20px; padding: 0.35rem 1rem; font-size: 0.8rem;
-      letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1.5rem;
-      backdrop-filter: blur(4px);
-    }
-    .hero h1 {
-      font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 4.5rem);
-      line-height: 1.1; margin-bottom: 1.2rem; max-width: 700px;
-    }
-    .hero h1 span { color: var(--green-pale); }
-    .hero p { font-size: 1.1rem; color: rgba(255,255,255,0.85); max-width: 520px; line-height: 1.7; margin-bottom: 2.5rem; }
-    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
-    .btn-hero-main {
-      background: var(--accent); color: white; border: none;
-      padding: 0.85rem 2rem; border-radius: 10px; font-size: 1rem;
-      font-weight: 600; cursor: pointer; transition: all 0.2s; text-decoration: none;
-    }
-    .btn-hero-main:hover { background: #e08c50; transform: translateY(-2px); }
-    .btn-hero-ghost {
-      background: transparent; color: white; border: 2px solid rgba(255,255,255,0.5);
-      padding: 0.85rem 2rem; border-radius: 10px; font-size: 1rem;
-      font-weight: 500; cursor: pointer; transition: all 0.2s; text-decoration: none;
-    }
-    .btn-hero-ghost:hover { border-color: white; background: rgba(255,255,255,0.1); }
+    .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:7rem 3rem 4rem;gap:4rem;background:radial-gradient(ellipse 60% 50% at 80% 50%,rgba(116,198,157,0.1) 0%,transparent 70%);}
+    .hero-tag{display:inline-flex;align-items:center;gap:0.5rem;background:var(--mist);color:var(--forest);padding:0.35rem 1rem;border-radius:100px;font-size:0.75rem;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:1.5rem;border:1px solid rgba(45,106,79,0.15);}
+    .hero-tag::before{content:'';width:6px;height:6px;background:var(--fern);border-radius:50%;}
+    .hero-h1{font-family:'Fraunces',serif;font-size:clamp(2.8rem,5vw,4.5rem);font-weight:900;line-height:1.05;letter-spacing:-2px;margin-bottom:1.3rem;}
+    .hero-h1 em{font-style:italic;color:var(--fern);}
+    .hero-h1 .line2{display:block;color:var(--forest);}
+    .hero-p{font-size:1rem;line-height:1.75;color:var(--gray);max-width:440px;margin-bottom:2.2rem;}
+    .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+    .btn-hero{padding:0.85rem 1.8rem;border-radius:100px;font-family:'Outfit',sans-serif;font-weight:600;font-size:0.95rem;cursor:pointer;transition:all 0.25s;border:none;}
+    .btn-hero-fill{background:var(--forest);color:white;}
+    .btn-hero-fill:hover{background:var(--moss);transform:translateY(-2px);box-shadow:0 10px 28px rgba(27,67,50,0.25);}
+    .btn-hero-outline{background:transparent;color:var(--forest);border:1.5px solid var(--forest)!important;}
+    .btn-hero-outline:hover{background:var(--forest);color:white;}
 
-    /* STATS */
-    .stats {
-      display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
-      padding: 2.5rem 2rem;
-      background: var(--white);
-      border-bottom: 1px solid #e5e7eb;
-    }
-    .stat { text-align: center; }
-    .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--green-mid); font-weight: 700; }
-    .stat-label { font-size: 0.85rem; color: var(--gray); margin-top: 0.2rem; }
+    /* FLOATING CARDS */
+    .hero-right{display:flex;align-items:center;justify-content:center;}
+    .card-stack{position:relative;width:340px;height:400px;}
+    .fcard{position:absolute;border-radius:18px;padding:1.3rem;box-shadow:0 16px 48px rgba(0,0,0,0.1);}
+    .fcard:nth-child(1){width:280px;top:0;left:25px;background:var(--forest);color:white;animation:fc1 4s ease-in-out infinite;}
+    .fcard:nth-child(2){width:300px;top:95px;left:15px;background:white;animation:fc2 4s 0.5s ease-in-out infinite;}
+    .fcard:nth-child(3){width:260px;top:225px;left:45px;background:var(--parchment);animation:fc3 4s 1s ease-in-out infinite;}
+    @keyframes fc1{0%,100%{transform:rotate(-3deg) translateY(0)}50%{transform:rotate(-3deg) translateY(-7px)}}
+    @keyframes fc2{0%,100%{transform:rotate(1.5deg) translateY(0)}50%{transform:rotate(1.5deg) translateY(-5px)}}
+    @keyframes fc3{0%,100%{transform:rotate(-1deg) translateY(0)}50%{transform:rotate(-1deg) translateY(-8px)}}
+    .fc-label{font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;opacity:0.6;margin-bottom:0.4rem;}
+    .fc-name{font-family:'Fraunces',serif;font-size:1rem;font-weight:700;margin-bottom:0.25rem;}
+    .fc-price{font-size:1.3rem;font-weight:600;color:var(--sage);}
+    .fc-loc{font-size:0.78rem;opacity:0.65;margin-top:0.25rem;}
+
+    /* STATS BAR */
+    .stats-bar{display:flex;background:var(--forest);padding:1.8rem 3rem;}
+    .stat-item{flex:1;text-align:center;border-right:1px solid rgba(255,255,255,0.1);}
+    .stat-item:last-child{border-right:none;}
+    .stat-num{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:900;color:var(--sage);line-height:1;margin-bottom:0.25rem;}
+    .stat-lbl{font-size:0.82rem;color:rgba(255,255,255,0.6);}
 
     /* LISTINGS SECTION */
-    .section { padding: 4rem 2.5rem; max-width: 1200px; margin: 0 auto; }
-    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
-    .section-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--green-dark); }
-    .section-title span { color: var(--green-light); }
-    .view-all { color: var(--green-mid); font-weight: 500; text-decoration: none; font-size: 0.95rem; }
-    .view-all:hover { text-decoration: underline; }
-
-    /* SEARCH BAR */
-    .search-bar {
-      display: flex; gap: 0.75rem; margin-bottom: 2.5rem; flex-wrap: wrap;
-      background: white; padding: 1.2rem; border-radius: 14px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-    }
-    .search-bar input, .search-bar select {
-      flex: 1; min-width: 160px; padding: 0.7rem 1rem;
-      border: 1.5px solid #e5e7eb; border-radius: 8px; font-size: 0.9rem;
-      font-family: 'DM Sans', sans-serif; color: var(--text); outline: none;
-      transition: border-color 0.2s;
-    }
-    .search-bar input:focus, .search-bar select:focus { border-color: var(--green-light); }
-    .search-bar button {
-      background: var(--green-mid); color: white; border: none;
-      padding: 0.7rem 1.5rem; border-radius: 8px; font-weight: 600;
-      cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
-    }
-    .search-bar button:hover { background: var(--green-dark); }
-
-    /* CARDS */
-    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
-    .card {
-      background: white; border-radius: 14px; overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.06); transition: all 0.25s;
-      cursor: pointer;
-    }
-    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
-    .card-img {
-      height: 180px;
-      background: linear-gradient(135deg, var(--green-mid), var(--green-light));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 3rem; position: relative;
-    }
-    .card-badge {
-      position: absolute; top: 12px; right: 12px;
-      background: var(--accent); color: white;
-      padding: 0.25rem 0.7rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;
-    }
-    .card-badge.closed { background: #ef4444; }
-    .card-body { padding: 1.2rem; }
-    .card-title { font-weight: 600; font-size: 1rem; margin-bottom: 0.3rem; color: var(--green-dark); }
-    .card-location { color: var(--gray); font-size: 0.85rem; margin-bottom: 0.8rem; }
-    .card-meta { display: flex; justify-content: space-between; align-items: center; }
-    .card-price { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--green-mid); font-weight: 700; }
-    .card-size { font-size: 0.8rem; color: var(--gray); background: var(--green-mist); padding: 0.2rem 0.6rem; border-radius: 6px; }
-    .card-footer { padding: 0.8rem 1.2rem; border-top: 1px solid #f3f4f6; display: flex; gap: 0.5rem; }
-    .btn-view {
-      flex: 1; background: var(--green-mist); color: var(--green-dark);
-      border: 1.5px solid var(--green-pale); border-radius: 8px;
-      padding: 0.5rem; font-weight: 500; font-size: 0.85rem;
-      cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
-    }
-    .btn-view:hover { background: var(--green-pale); }
-    .btn-inquire {
-      flex: 1; background: var(--green-mid); color: white;
-      border: none; border-radius: 8px; padding: 0.5rem;
-      font-weight: 600; font-size: 0.85rem; cursor: pointer;
-      transition: all 0.2s; font-family: 'DM Sans', sans-serif;
-    }
-    .btn-inquire:hover { background: var(--green-dark); }
+    .section{max-width:1200px;margin:0 auto;padding:5rem 2.5rem;}
+    .sec-eye{font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:var(--fern);margin-bottom:0.6rem;}
+    .sec-h2{font-family:'Fraunces',serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:900;letter-spacing:-1px;margin-bottom:0.5rem;}
+    .sec-h2 em{font-style:italic;color:var(--fern);}
+    .sec-sub{font-size:0.95rem;color:var(--gray);margin-bottom:2.5rem;line-height:1.7;}
+    .search-bar{background:white;border-radius:16px;padding:1.1rem 1.3rem;display:flex;gap:0.7rem;flex-wrap:wrap;margin-bottom:2rem;box-shadow:0 2px 16px rgba(0,0,0,0.06);}
+    .search-bar input,.search-bar select{flex:1;min-width:140px;padding:0.65rem 0.9rem;border:1.5px solid #e5e7eb;border-radius:10px;font-size:0.88rem;font-family:'Outfit',sans-serif;color:var(--ink);background:var(--cream);outline:none;transition:border-color 0.2s;}
+    .search-bar input:focus,.search-bar select:focus{border-color:var(--fern);background:white;}
+    .search-bar button{background:var(--forest);color:white;border:none;padding:0.65rem 1.5rem;border-radius:10px;font-weight:600;font-size:0.88rem;cursor:pointer;font-family:'Outfit',sans-serif;transition:background 0.2s;}
+    .search-bar button:hover{background:var(--moss);}
+    .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.3rem;}
+    .lcard{background:white;border-radius:16px;overflow:hidden;border:1px solid rgba(0,0,0,0.05);transition:all 0.25s;cursor:pointer;}
+    .lcard:hover{transform:translateY(-5px);box-shadow:0 20px 40px rgba(0,0,0,0.1);}
+    .lcard-img{height:175px;display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative;background:linear-gradient(135deg,var(--forest),var(--fern));}
+    .lcard-img.gold{background:linear-gradient(135deg,#92400e,#f59e0b);}
+    .lcard-img.warm{background:linear-gradient(135deg,#7c3aed,#a78bfa);}
+    .lcard-img.closed{background:linear-gradient(135deg,#4b5563,#9ca3af);}
+    .lcard-badge{position:absolute;top:12px;right:12px;padding:0.25rem 0.7rem;border-radius:100px;font-size:0.7rem;font-weight:700;backdrop-filter:blur(8px);}
+    .lcard-badge.available{background:rgba(212,253,220,0.92);color:#166534;}
+    .lcard-badge.closed{background:rgba(254,202,202,0.92);color:#991b1b;}
+    .lcard-body{padding:1.2rem 1.3rem;}
+    .lcard-type{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--fern);margin-bottom:0.3rem;}
+    .lcard-name{font-family:'Fraunces',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:0.25rem;}
+    .lcard-loc{font-size:0.8rem;color:var(--gray);}
+    .lcard-foot{display:flex;align-items:center;justify-content:space-between;padding:0.85rem 1.3rem;border-top:1px solid #f3f4f6;}
+    .lcard-price{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:900;color:var(--forest);}
+    .lcard-price small{font-family:'Outfit',sans-serif;font-size:0.75rem;font-weight:400;color:var(--gray);}
+    .lcard-size{background:var(--mist);color:var(--moss);padding:0.25rem 0.7rem;border-radius:100px;font-size:0.75rem;font-weight:600;}
+    .lcard-actions{display:flex;gap:0.5rem;padding:0.75rem 1.3rem 1rem;}
+    .lcard-btn-ghost{flex:1;padding:0.5rem;border-radius:8px;border:1.5px solid #e5e7eb;background:none;color:var(--forest);font-weight:500;font-size:0.8rem;cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.2s;}
+    .lcard-btn-ghost:hover{border-color:var(--fern);background:var(--mist);}
+    .lcard-btn-fill{flex:1;padding:0.5rem;border-radius:8px;border:none;background:var(--forest);color:white;font-weight:600;font-size:0.8rem;cursor:pointer;font-family:'Outfit',sans-serif;transition:background 0.2s;}
+    .lcard-btn-fill:hover{background:var(--moss);}
 
     /* HOW IT WORKS */
-    .how-section { background: var(--green-dark); color: white; padding: 4rem 2.5rem; }
-    .how-inner { max-width: 1000px; margin: 0 auto; }
-    .how-title { font-family: 'Playfair Display', serif; font-size: 2rem; text-align: center; margin-bottom: 0.5rem; }
-    .how-sub { text-align: center; color: var(--green-pale); margin-bottom: 3rem; font-size: 0.95rem; }
-    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; }
-    .step { text-align: center; }
-    .step-icon {
-      width: 64px; height: 64px; border-radius: 50%;
-      background: rgba(255,255,255,0.1); border: 2px solid var(--green-light);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.8rem; margin: 0 auto 1rem;
-    }
-    .step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
-    .step p { font-size: 0.85rem; color: rgba(255,255,255,0.7); line-height: 1.6; }
+    .how-wrap{background:var(--forest);padding:5rem 2.5rem;}
+    .how-inner{max-width:1100px;margin:0 auto;}
+    .how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.5rem;margin-top:2.5rem;}
+    .how-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:1.8rem;transition:all 0.25s;position:relative;overflow:hidden;}
+    .how-card:hover{background:rgba(255,255,255,0.1);transform:translateY(-3px);}
+    .how-n{font-family:'Fraunces',serif;font-size:3.5rem;font-weight:900;color:rgba(116,198,157,0.12);position:absolute;top:0.5rem;right:1rem;line-height:1;}
+    .how-icon{width:44px;height:44px;border-radius:12px;background:rgba(116,198,157,0.15);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:1rem;}
+    .how-title{font-family:'Fraunces',serif;font-size:1rem;font-weight:700;color:white;margin-bottom:0.5rem;}
+    .how-desc{font-size:0.85rem;color:rgba(255,255,255,0.55);line-height:1.65;}
 
     /* FOOTER */
-    footer {
-      background: var(--green-dark); color: rgba(255,255,255,0.6);
-      text-align: center; padding: 1.5rem;
-      font-size: 0.85rem; border-top: 1px solid rgba(255,255,255,0.1);
-    }
-    footer strong { color: var(--green-pale); }
+    footer{background:var(--ink);color:rgba(255,255,255,0.5);padding:2rem 3rem;text-align:center;font-size:0.83rem;}
+    footer strong{color:var(--sage);}
+    footer p+p{margin-top:0.25rem;}
 
-    /* MODAL */
-    .modal-overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.5); z-index: 200;
-      align-items: center; justify-content: center; backdrop-filter: blur(4px);
-    }
-    .modal-overlay.active { display: flex; }
-    .modal {
-      background: white; border-radius: 16px; padding: 2rem;
-      width: 100%; max-width: 480px; margin: 1rem;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-      animation: slideUp 0.3s ease;
-    }
-    @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
-    .modal-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--green-dark); }
-    .modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--gray); }
-    .form-group { margin-bottom: 1.2rem; }
-    .form-group label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--green-dark); margin-bottom: 0.4rem; }
-    .form-group input, .form-group select {
-      width: 100%; padding: 0.75rem 1rem;
-      border: 1.5px solid #e5e7eb; border-radius: 8px;
-      font-size: 0.9rem; font-family: 'DM Sans', sans-serif;
-      outline: none; transition: border-color 0.2s;
-    }
-    .form-group input:focus, .form-group select:focus { border-color: var(--green-light); }
-    .btn-submit {
-      width: 100%; background: var(--green-mid); color: white;
-      border: none; padding: 0.85rem; border-radius: 10px;
-      font-size: 1rem; font-weight: 600; cursor: pointer;
-      font-family: 'DM Sans', sans-serif; transition: all 0.2s; margin-top: 0.5rem;
-    }
-    .btn-submit:hover { background: var(--green-dark); }
-    .modal-switch { text-align: center; margin-top: 1rem; font-size: 0.875rem; color: var(--gray); }
-    .modal-switch a { color: var(--green-mid); font-weight: 600; cursor: pointer; }
-    .role-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
-    .role-tab {
-      flex: 1; padding: 0.6rem; border-radius: 8px; border: 1.5px solid #e5e7eb;
-      background: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
-      font-size: 0.85rem; font-weight: 500; transition: all 0.2s;
-    }
-    .role-tab.active { background: var(--green-mid); color: white; border-color: var(--green-mid); }
+    /* MODALS */
+    .overlay{display:none;position:fixed;inset:0;background:rgba(13,31,21,0.7);z-index:500;align-items:center;justify-content:center;backdrop-filter:blur(8px);}
+    .overlay.show{display:flex;}
+    @keyframes pop{from{transform:scale(0.95) translateY(10px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+
+    /* Login modal */
+    .login-box{background:var(--cream);border-radius:22px;padding:2.2rem;width:100%;max-width:420px;margin:1rem;box-shadow:0 32px 64px rgba(0,0,0,0.2);animation:pop 0.3s ease;}
+    .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;}
+    .modal-title{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:900;color:var(--ink);}
+    .modal-subtitle{font-size:0.85rem;color:var(--gray);margin-bottom:1.6rem;}
+    .modal-close{background:var(--parchment);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:0.95rem;color:var(--ink);display:flex;align-items:center;justify-content:center;}
+    .fg{margin-bottom:0.9rem;}
+    .fg label{display:block;font-size:0.75rem;font-weight:600;color:var(--forest);margin-bottom:0.35rem;text-transform:uppercase;letter-spacing:0.4px;}
+    .fg input{width:100%;padding:0.75rem 1rem;border:1.5px solid #e5e7eb;border-radius:10px;font-size:0.88rem;font-family:'Outfit',sans-serif;color:var(--ink);background:white;outline:none;transition:border-color 0.2s;}
+    .fg input:focus{border-color:var(--fern);}
+    .pw-wrap{position:relative;}
+    .pw-wrap input{padding-right:3rem;}
+    .pw-eye{position:absolute;right:0.9rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--gray);font-size:0.95rem;padding:0;}
+    .err-msg{background:#fee2e2;color:#991b1b;padding:0.65rem 0.9rem;border-radius:8px;font-size:0.82rem;margin-bottom:0.9rem;border-left:3px solid #ef4444;display:none;}
+    .btn-modal{width:100%;padding:0.85rem;border-radius:12px;background:var(--forest);color:white;border:none;font-size:0.95rem;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.2s;margin-top:0.4rem;}
+    .btn-modal:hover{background:var(--moss);}
+    .modal-switch{text-align:center;margin-top:1rem;font-size:0.83rem;color:var(--gray);}
+    .modal-switch a{color:var(--fern);font-weight:600;cursor:pointer;}
+
+    /* Register modal */
+    .reg-box{background:white;border-radius:24px;width:100%;max-width:410px;margin:1rem;max-height:92vh;overflow-y:auto;box-shadow:0 24px 56px rgba(0,0,0,0.18);animation:pop 0.3s ease;}
+    .reg-top{padding:1.8rem 1.8rem 0;}
+    .reg-logo{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:900;color:var(--forest);margin-bottom:0.9rem;}
+    .reg-logo span{color:var(--terracotta);}
+    .reg-h{font-size:1.3rem;font-weight:600;color:var(--ink);margin-bottom:0.25rem;}
+    .reg-sub{font-size:0.82rem;color:var(--gray);margin-bottom:1rem;}
+    .role-btns{display:flex;gap:0.5rem;margin-bottom:0.8rem;}
+    .role-btn{flex:1;padding:0.55rem;border:1.5px solid #dadde1;border-radius:9px;background:none;font-family:'Outfit',sans-serif;font-size:0.8rem;font-weight:500;color:var(--gray);cursor:pointer;transition:all 0.2s;text-align:center;}
+    .role-btn.on{border-color:var(--fern);background:var(--mist);color:var(--forest);font-weight:600;}
+    .reg-section{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--fern);margin:0.6rem 0 0.5rem;padding-bottom:0.25rem;border-bottom:1px solid var(--mist);}
+    .reg-body{padding:0 1.8rem;}
+    .rfg{margin-bottom:0.7rem;position:relative;}
+    .rfg input{width:100%;padding:0.85rem 1rem 0.25rem;border:1.5px solid #dadde1;border-radius:9px;font-size:0.88rem;font-family:'Outfit',sans-serif;color:var(--ink);background:white;outline:none;transition:border-color 0.2s;height:50px;}
+    .rfg input[type=date]{padding-top:1rem;padding-bottom:0.2rem;}
+    .rfg input:focus{border-color:var(--fern);}
+    .rfg input:focus+label,.rfg input:not(:placeholder-shown)+label{top:7px;font-size:0.65rem;color:var(--fern);}
+    .rfg label{position:absolute;left:1rem;top:50%;transform:translateY(-50%);font-size:0.85rem;color:#aaa;pointer-events:none;transition:all 0.2s;}
+    .rfg input[type=date]+label{top:8px;font-size:0.65rem;color:var(--fern);}
+    .rfg input[type=number]::-webkit-inner-spin-button,.rfg input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;}
+    .rfg input[type=number]{-moz-appearance:textfield;}
+    .g3{display:grid;grid-template-columns:1fr 0.5fr 1fr;gap:0.5rem;margin-bottom:0.7rem;}
+    .g2{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-bottom:0.7rem;}
+    .pw-rfg{position:relative;}
+    .pw-rfg input{padding-right:2.8rem;}
+    .pw-rfg .eye{position:absolute;right:0.85rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#aaa;font-size:0.9rem;padding:0;}
+    .strength{display:flex;gap:3px;height:3px;margin-top:3px;}
+    .sb{flex:1;border-radius:3px;background:#e5e7eb;transition:background 0.3s;}
+    .slbl{font-size:0.68rem;color:#aaa;margin-top:2px;}
+    .terms{display:flex;align-items:flex-start;gap:0.5rem;margin:0.5rem 0;}
+    .terms input{width:15px;height:15px;accent-color:var(--forest);cursor:pointer;flex-shrink:0;margin-top:2px;}
+    .terms label{font-size:0.72rem;color:#777;line-height:1.5;cursor:pointer;}
+    .terms label a{color:var(--fern);font-weight:600;}
+    .reg-foot{padding:0.9rem 1.8rem 1.5rem;}
+    .btn-reg{width:100%;padding:0.8rem;border-radius:10px;background:var(--forest);color:white;border:none;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;transition:background 0.2s;}
+    .btn-reg:hover{background:var(--moss);}
+    .reg-switch{text-align:center;margin-top:0.7rem;font-size:0.8rem;color:var(--gray);}
+    .reg-switch a{color:var(--fern);font-weight:600;cursor:pointer;}
+
+    @media(max-width:900px){.hero{grid-template-columns:1fr;padding:6rem 1.5rem 3rem;}.hero-right{display:none;}nav{padding:1rem 1.5rem;}.stats-bar{flex-wrap:wrap;}.section{padding:3.5rem 1.5rem;}}
   </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
-  <div class="logo">Rent<span>Now</span></div>
-  <div class="nav-links">
-    <a href="#" class="login" onclick="openModal('login')">Log In</a>
-    <a href="#" class="register" onclick="openModal('register')">Register</a>
+  <a href="index.html" class="logo">Rent<span>Now</span></a>
+  <div class="nav-right">
+    <a href="src/pages/listings.html" class="btn-nav-ghost">Browse Spaces</a>
+    <button class="btn-nav-ghost" onclick="showLogin()">Log In</button>
+    <button class="btn-nav-solid" onclick="showRegister()">Get Started</button>
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
-  <div class="hero-badge">🌿 Barangay Business Tracker</div>
-  <h1>Find Your <span>Perfect</span> Commercial Space</h1>
-  <p>RentNow connects local entrepreneurs with available commercial spaces in your barangay — tracking business closures and vacant listings in real time.</p>
-  <div class="hero-btns">
-    <a href="src/pages/listings.html" class="btn-hero-main">Browse Listings →</a>
-    <a href="#" class="btn-hero-ghost" onclick="openModal('register')">List Your Space</a>
+  <div>
+    <div class="hero-tag">SDG 8 — Barangay Business Tracker</div>
+    <h1 class="hero-h1">Find your <em>perfect</em><span class="line2">commercial space.</span></h1>
+    <p class="hero-p">RentNow connects local entrepreneurs with available commercial spaces in your barangay — tracking business closures and vacant listings in real time.</p>
+    <div class="hero-btns">
+      <button class="btn-hero btn-hero-fill" onclick="location.href='src/pages/listings.html'">Browse Listings →</button>
+      <button class="btn-hero btn-hero-outline" onclick="showRegister()">List Your Space</button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="card-stack">
+      <div class="fcard"><div class="fc-label">Featured Space</div><div class="fc-name">Corner Sari-Sari Unit</div><div class="fc-price">₱4,500/mo</div><div class="fc-loc">📍 Brgy. Centro · 25 sqm</div></div>
+      <div class="fcard"><div class="fc-label">🔥 New Listing</div><div class="fc-name">Boutique Retail Space</div><div class="fc-price" style="color:var(--fern)">₱12,000/mo</div><div class="fc-loc">📍 Brgy. Ibabao · 60 sqm</div></div>
+      <div class="fcard"><div class="fc-label">Just Listed</div><div class="fc-name">Food Stall Unit</div><div class="fc-price" style="color:var(--terracotta)">₱7,800/mo</div><div class="fc-loc">45 sqm · Brgy. Tipolo</div></div>
+    </div>
   </div>
 </section>
 
-<!-- STATS -->
-<div class="stats">
-  <div class="stat"><div class="stat-num">48</div><div class="stat-label">Active Listings</div></div>
-  <div class="stat"><div class="stat-num">12</div><div class="stat-label">Closed Businesses</div></div>
-  <div class="stat"><div class="stat-num">230+</div><div class="stat-label">Entrepreneurs Served</div></div>
-  <div class="stat"><div class="stat-num">5</div><div class="stat-label">Barangays Covered</div></div>
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-num">48</div><div class="stat-lbl">Active Listings</div></div>
+  <div class="stat-item"><div class="stat-num">12</div><div class="stat-lbl">Closed Businesses</div></div>
+  <div class="stat-item"><div class="stat-num">230+</div><div class="stat-lbl">Entrepreneurs Served</div></div>
+  <div class="stat-item"><div class="stat-num">5</div><div class="stat-lbl">Barangays Covered</div></div>
 </div>
 
-<!-- LISTINGS -->
 <div class="section">
-  <div class="section-header">
-    <div class="section-title">Available <span>Spaces</span></div>
-    <a href="src/pages/listings.html" class="view-all">View all listings →</a>
-  </div>
-
+  <div class="sec-eye">Available Spaces</div>
+  <h2 class="sec-h2">Find your <em>next</em> location</h2>
+  <p class="sec-sub">Browse and filter available commercial spaces posted by property owners across your barangay.</p>
   <div class="search-bar">
-    <input type="text" placeholder="🔍  Search by name or location..." id="search-input"/>
-    <select id="filter-price">
-      <option value="">Any Price</option>
-      <option value="5000">Under ₱5,000</option>
-      <option value="10000">Under ₱10,000</option>
-      <option value="20000">Under ₱20,000</option>
-    </select>
-    <select id="filter-size">
-      <option value="">Any Size</option>
-      <option value="small">Small (< 30sqm)</option>
-      <option value="medium">Medium (30–80sqm)</option>
-      <option value="large">Large (80sqm+)</option>
-    </select>
-    <button onclick="filterListings()">Search</button>
+    <input type="text" id="sq" placeholder="Search by name or location..."/>
+    <select id="sp"><option value="">Any Price</option><option value="5000">Under ₱5,000</option><option value="10000">Under ₱10,000</option><option value="20000">Under ₱20,000</option></select>
+    <select id="sb"><option value="">All Barangays</option><option value="centro">Brgy. Centro</option><option value="tipolo">Brgy. Tipolo</option><option value="ibabao">Brgy. Ibabao</option></select>
+    <button onclick="filterCards()">Search</button>
   </div>
-
-  <div class="cards-grid" id="listings-grid">
-    <!-- Injected by JS -->
-  </div>
+  <div class="cards-grid" id="cards-grid"></div>
 </div>
 
-<!-- HOW IT WORKS -->
-<div class="how-section">
+<div class="how-wrap">
   <div class="how-inner">
-    <div class="how-title">How RentNow Works</div>
-    <div class="how-sub">Simple. Fast. Built for your barangay.</div>
-    <div class="steps">
-      <div class="step">
-        <div class="step-icon">🏠</div>
-        <h3>Owners Post Spaces</h3>
-        <p>Property owners list their vacant commercial spaces with photos, price, and details.</p>
-      </div>
-      <div class="step">
-        <div class="step-icon">🔎</div>
-        <h3>Entrepreneurs Search</h3>
-        <p>Browse and filter available spaces by location, price, and size to find the perfect fit.</p>
-      </div>
-      <div class="step">
-        <div class="step-icon">📋</div>
-        <h3>Track Business Status</h3>
-        <p>Admin monitors open, closed, and vacant businesses across the barangay in real time.</p>
-      </div>
-      <div class="step">
-        <div class="step-icon">🤝</div>
-        <h3>Connect & Inquire</h3>
-        <p>Interested renters send inquiries directly to property owners through the platform.</p>
-      </div>
+    <div class="sec-eye" style="color:var(--sage)">How It Works</div>
+    <h2 class="sec-h2" style="color:white">Simple. Fast. <em style="color:var(--sage)">Built for your barangay.</em></h2>
+    <div class="how-grid">
+      <div class="how-card"><div class="how-n">01</div><div class="how-icon">🏠</div><div class="how-title">Owners Post Spaces</div><div class="how-desc">Property owners list their vacant commercial spaces with price, size, and full details.</div></div>
+      <div class="how-card"><div class="how-n">02</div><div class="how-icon">🔎</div><div class="how-title">Entrepreneurs Search</div><div class="how-desc">Browse and filter available spaces by location, price, and size to find the perfect fit.</div></div>
+      <div class="how-card"><div class="how-n">03</div><div class="how-icon">📋</div><div class="how-title">Track Businesses</div><div class="how-desc">Admins monitor open, closed, and vacant businesses across the barangay in real time.</div></div>
+      <div class="how-card"><div class="how-n">04</div><div class="how-icon">🤝</div><div class="how-title">Connect and Inquire</div><div class="how-desc">Send inquiries directly to property owners and get notified instantly by email.</div></div>
     </div>
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
-  <p>© 2025 <strong>RentNow</strong> — KALUY-E TEAM | Marvin Calvez · Junnel Montellano · Kylar Covy Bihag · Kier Keir Gom-os</p>
-  <p style="margin-top:0.3rem;">SYSARCH32 Midterm Project — Built with ❤️ for local communities</p>
+  <p>© 2025 <strong>RentNow</strong> — KALUY-E TEAM</p>
+  <p>Marvin Calvez · Junnel Montellano · Kylar Covy Bihag · Kier Keir Gom-os</p>
+  <p style="margin-top:0.4rem;font-size:0.78rem">SYSARCH32 Midterm Project · SDG 8 — Decent Work and Economic Growth</p>
 </footer>
 
 <!-- LOGIN MODAL -->
-<div class="modal-overlay" id="login-modal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Welcome Back 👋</div>
-      <button class="modal-close" onclick="closeModal('login')">×</button>
+<div class="overlay" id="login-overlay">
+  <div class="login-box">
+    <div class="modal-head">
+      <div class="modal-title">Welcome back</div>
+      <button class="modal-close" onclick="hideLogin()">✕</button>
     </div>
-    <div class="role-tabs">
-      <button class="role-tab active" onclick="setRole(this,'admin')">Admin</button>
-      <button class="role-tab" onclick="setRole(this,'owner')">Property Owner</button>
-      <button class="role-tab" onclick="setRole(this,'entrepreneur')">Entrepreneur</button>
+    <div class="modal-subtitle">Log in to your RentNow account</div>
+    <div class="err-msg" id="login-err"></div>
+    <div class="fg"><label>Email Address</label><input type="email" id="l-email" placeholder="Enter your email"/></div>
+    <div class="fg"><label>Password</label>
+      <div class="pw-wrap"><input type="password" id="l-pass" placeholder="Enter your password"/><button class="pw-eye" onclick="toggleEye('l-pass',this)">👁</button></div>
     </div>
-    <div class="form-group">
-      <label>Email Address</label>
-      <input type="email" id="login-email" placeholder="you@example.com"/>
-    </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" id="login-password" placeholder="••••••••"/>
-    </div>
-    <button class="btn-submit" onclick="handleLogin()">Log In</button>
-    <div class="modal-switch">Don't have an account? <a onclick="switchModal('login','register')">Register here</a></div>
+    <button class="btn-modal" id="login-btn" onclick="doLogin()">Log In</button>
+    <div class="modal-switch">No account yet? <a onclick="hideLogin();showRegister()">Create one here</a></div>
   </div>
 </div>
 
 <!-- REGISTER MODAL -->
-<div class="modal-overlay" id="register-modal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Create Account 🌿</div>
-      <button class="modal-close" onclick="closeModal('register')">×</button>
+<div class="overlay" id="reg-overlay">
+  <div class="reg-box">
+    <div class="reg-top">
+      <div class="reg-logo">Rent<span>Now</span></div>
+      <div class="reg-h">Create your account</div>
+      <div class="reg-sub">Choose your role and fill in your details.</div>
+      <div class="role-btns">
+        <button class="role-btn on" id="rb-owner" onclick="setRole('owner')">🏠 Property Owner</button>
+        <button class="role-btn" id="rb-entre" onclick="setRole('entrepreneur')">🔍 Entrepreneur</button>
+      </div>
     </div>
-    <div class="role-tabs">
-      <button class="role-tab active" onclick="setRole(this,'owner')">Property Owner</button>
-      <button class="role-tab" onclick="setRole(this,'entrepreneur')">Entrepreneur</button>
+    <div class="reg-body">
+      <div class="reg-section">Personal Information</div>
+      <div class="g3">
+        <div class="rfg"><input type="text" id="r-fn" placeholder=" "/><label>First name</label></div>
+        <div class="rfg"><input type="text" id="r-mi" placeholder=" " maxlength="3"/><label>M.I.</label></div>
+        <div class="rfg"><input type="text" id="r-ln" placeholder=" "/><label>Last name</label></div>
+      </div>
+      <div class="g2">
+        <div class="rfg"><input type="number" id="r-age" placeholder=" " min="18" max="100"/><label>Age</label></div>
+        <div class="rfg"><input type="date" id="r-bday"/><label>Birthday</label></div>
+      </div>
+      <div class="reg-section">Account Details</div>
+      <div class="rfg"><input type="email" id="r-email" placeholder=" "/><label>Email address</label></div>
+      <div class="rfg pw-rfg">
+        <input type="password" id="r-pass" placeholder=" " oninput="pwStrength(this.value)"/>
+        <label>Password</label>
+        <button class="eye" onclick="toggleEye('r-pass',this)">👁</button>
+      </div>
+      <div class="strength"><div class="sb" id="sb1"></div><div class="sb" id="sb2"></div><div class="sb" id="sb3"></div><div class="sb" id="sb4"></div></div>
+      <div class="slbl" id="slbl">Enter a password</div>
+      <div class="rfg pw-rfg" style="margin-top:0.7rem;">
+        <input type="password" id="r-confirm" placeholder=" "/>
+        <label>Confirm password</label>
+        <button class="eye" onclick="toggleEye('r-confirm',this)">👁</button>
+      </div>
+      <div class="terms">
+        <input type="checkbox" id="r-terms"/>
+        <label for="r-terms">I agree to RentNow's <a href="#">Terms of Service</a> and confirm all information I provided is accurate.</label>
+      </div>
     </div>
-    <div class="form-group">
-      <label>Full Name</label>
-      <input type="text" placeholder="Juan Dela Cruz"/>
+    <div class="reg-foot" id="reg-foot">
+      <button class="btn-reg" onclick="doRegister()">Create account</button>
+      <div class="reg-switch">Already have an account? <a onclick="hideReg();showLogin()">Sign in</a></div>
     </div>
-    <div class="form-group">
-      <label>Email Address</label>
-      <input type="email" placeholder="you@example.com"/>
-    </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" placeholder="••••••••"/>
-    </div>
-    <div class="form-group">
-      <label>Barangay</label>
-      <select>
-        <option>Mandaue City</option>
-        <option>Barangay Centro</option>
-        <option>Barangay Tipolo</option>
-        <option>Barangay Ibabao</option>
-      </select>
-    </div>
-    <button class="btn-submit" onclick="handleRegister()">Create Account</button>
-    <div class="modal-switch">Already have an account? <a onclick="switchModal('register','login')">Log in here</a></div>
   </div>
 </div>
 
-<script src="src/js/api.js"></script>
+<script src="src/js/auth.js"></script>
 <script>
-  // Sample data (used as fallback when backend is not connected)
+  // Sample listings for homepage preview
   const listings = [
-    { id:1, name:"Corner Sari-Sari Store Space", location:"Brgy. Centro, Mandaue", price:4500, size:"25 sqm", status:"available", icon:"🏪" },
-    { id:2, name:"Spacious Food Stall Unit", location:"Brgy. Tipolo, Mandaue", price:7800, size:"45 sqm", status:"available", icon:"🍜" },
-    { id:3, name:"Boutique Retail Space", location:"Brgy. Ibabao, Mandaue", price:12000, size:"60 sqm", status:"available", icon:"👗" },
-    { id:4, name:"Small Office Unit", location:"Brgy. Centro, Mandaue", price:9500, size:"35 sqm", status:"available", icon:"🏢" },
-    { id:5, name:"Vacant Resto Space", location:"Brgy. Tipolo, Mandaue", price:15000, size:"90 sqm", status:"available", icon:"🍽️" },
-    { id:6, name:"Mini Pharmacy Slot", location:"Brgy. Ibabao, Mandaue", price:6000, size:"20 sqm", status:"closed", icon:"💊" },
+    { id:1, name:'Corner Sari-Sari Store Space', loc:'Brgy. Centro, Mandaue', price:4500,  size:25, type:'Retail',     status:'available', icon:'🏪', cl:'' },
+    { id:2, name:'Spacious Food Stall Unit',     loc:'Brgy. Tipolo, Mandaue', price:7800,  size:45, type:'Food Stall', status:'available', icon:'🍜', cl:'gold' },
+    { id:3, name:'Boutique Retail Space',        loc:'Brgy. Ibabao, Mandaue', price:12000, size:60, type:'Retail',     status:'available', icon:'👗', cl:'warm' },
+    { id:4, name:'Small Office Unit',            loc:'Brgy. Centro, Mandaue', price:9500,  size:35, type:'Office',     status:'available', icon:'🏢', cl:'' },
+    { id:5, name:'Vacant Resto Space',           loc:'Brgy. Tipolo, Mandaue', price:15000, size:90, type:'Restaurant', status:'available', icon:'🍽️', cl:'gold' },
+    { id:6, name:'Mini Pharmacy Slot',           loc:'Brgy. Ibabao, Mandaue', price:6000,  size:20, type:'Retail',     status:'closed',    icon:'💊', cl:'closed' },
   ];
 
   function renderCards(data) {
-    const grid = document.getElementById('listings-grid');
+    const grid = document.getElementById('cards-grid');
+    if (!data.length) { grid.innerHTML = '<p style="color:#9ca3af;grid-column:1/-1;text-align:center;padding:2rem;">No listings found.</p>'; return; }
     grid.innerHTML = data.map(l => `
-      <div class="card">
-        <div class="card-img">${l.icon}<span class="card-badge ${l.status==='closed'?'closed':''}">${l.status==='available'?'Available':'Recently Closed'}</span></div>
-        <div class="card-body">
-          <div class="card-title">${l.name}</div>
-          <div class="card-location">📍 ${l.location}</div>
-          <div class="card-meta">
-            <div class="card-price">₱${l.price.toLocaleString()}/mo</div>
-            <div class="card-size">${l.size}</div>
-          </div>
+      <div class="lcard">
+        <div class="lcard-img ${l.cl}">${l.icon}
+          <span class="lcard-badge ${l.status}">${l.status === 'available' ? '● Available' : '● Closed'}</span>
         </div>
-        <div class="card-footer">
-          <button class="btn-view" onclick="viewListing(${l.id})">View Details</button>
-          <button class="btn-inquire">Inquire Now</button>
+        <div class="lcard-body">
+          <div class="lcard-type">${l.type}</div>
+          <div class="lcard-name">${l.name}</div>
+          <div class="lcard-loc">📍 ${l.loc}</div>
         </div>
-      </div>
-    `).join('');
+        <div class="lcard-foot">
+          <div class="lcard-price">₱${l.price.toLocaleString()}<small>/mo</small></div>
+          <div class="lcard-size">${l.size} sqm</div>
+        </div>
+        <div class="lcard-actions">
+          <button class="lcard-btn-ghost" onclick="alert('${l.name}\\n📍 ${l.loc}\\n💰 ₱${l.price.toLocaleString()}/mo\\n📐 ${l.size} sqm')">Details</button>
+          <button class="lcard-btn-fill" onclick="showLogin()">Inquire Now</button>
+        </div>
+      </div>`).join('');
   }
 
-  function filterListings() {
-    const q = document.getElementById('search-input').value.toLowerCase();
-    const price = parseInt(document.getElementById('filter-price').value) || Infinity;
-    const filtered = listings.filter(l =>
-      (l.name.toLowerCase().includes(q) || l.location.toLowerCase().includes(q)) &&
-      l.price <= price
-    );
-    renderCards(filtered);
+  function filterCards() {
+    const q    = document.getElementById('sq').value.toLowerCase();
+    const maxP = parseInt(document.getElementById('sp').value) || Infinity;
+    const brgy = document.getElementById('sb').value.toLowerCase();
+    renderCards(listings.filter(l =>
+      (l.name.toLowerCase().includes(q) || l.loc.toLowerCase().includes(q)) &&
+      l.price <= maxP &&
+      (!brgy || l.loc.toLowerCase().includes(brgy))
+    ));
   }
 
-  function viewListing(id) {
-    window.location.href = `src/pages/listing-detail.html?id=${id}`;
+  // Modal controls
+  function showLogin()  { document.getElementById('login-overlay').classList.add('show'); }
+  function hideLogin()  { document.getElementById('login-overlay').classList.remove('show'); }
+  function showRegister() { document.getElementById('reg-overlay').classList.add('show'); }
+  function hideReg()    { document.getElementById('reg-overlay').classList.remove('show'); }
+
+  document.getElementById('login-overlay').addEventListener('click', e => { if (e.target.id === 'login-overlay') hideLogin(); });
+  document.getElementById('reg-overlay').addEventListener('click',   e => { if (e.target.id === 'reg-overlay')   hideReg(); });
+
+  // Eye toggle
+  function toggleEye(id, btn) {
+    const el = document.getElementById(id);
+    el.type   = el.type === 'password' ? 'text' : 'password';
+    btn.textContent = el.type === 'password' ? '👁' : '🙈';
   }
 
-  function openModal(type) {
-    document.getElementById(type+'-modal').classList.add('active');
+  // Role selector
+  let currentRole = 'owner';
+  function setRole(r) {
+    currentRole = r;
+    document.getElementById('rb-owner').classList.toggle('on', r === 'owner');
+    document.getElementById('rb-entre').classList.toggle('on', r === 'entrepreneur');
   }
-  function closeModal(type) {
-    document.getElementById(type+'-modal').classList.remove('active');
-  }
-  function switchModal(from, to) {
-    closeModal(from); openModal(to);
-  }
-  function setRole(el, role) {
-    el.parentElement.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
-    el.classList.add('active');
-  }
-  // ── Real API Login ────────────────────────────────────────────────────────
-  async function handleLogin() {
-    const email = document.getElementById('login-email').value.trim();
-    const pass  = document.getElementById('login-password').value;
-    const roleTab = document.querySelector('#login-modal .role-tab.active').textContent.toLowerCase();
-    const errEl = document.getElementById('login-error');
 
-    if (!email || !pass) { showLoginError('Please fill in all fields.'); return; }
+  // Password strength meter
+  function pwStrength(v) {
+    const bars  = ['sb1','sb2','sb3','sb4'].map(id => document.getElementById(id));
+    const label = document.getElementById('slbl');
+    bars.forEach(b => b.style.background = '#e5e7eb');
+    if (!v) { label.textContent = 'Enter a password'; label.style.color = '#9ca3af'; return; }
+    let score = 0;
+    if (v.length >= 6)  score++;
+    if (v.length >= 10) score++;
+    if (/[A-Z]/.test(v) && /[0-9]/.test(v)) score++;
+    if (/[^A-Za-z0-9]/.test(v)) score++;
+    const colors = ['','#ef4444','#f59e0b','#3b82f6','#22c55e'];
+    const labels = ['','Weak','Fair','Good','Strong password ✓'];
+    for (let i = 0; i < score; i++) bars[i].style.background = colors[score];
+    label.textContent = labels[score] || '';
+    label.style.color = colors[score] || '#9ca3af';
+  }
 
-    const btn = document.querySelector('#login-modal .btn-submit');
+  // Login
+  async function doLogin() {
+    const email = document.getElementById('l-email').value.trim();
+    const pass  = document.getElementById('l-pass').value;
+    const err   = document.getElementById('login-err');
+    const btn   = document.getElementById('login-btn');
+
+    err.style.display = 'none';
+    if (!email || !pass) { err.textContent = 'Please fill in your email and password.'; err.style.display = 'block'; return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = 'Please enter a valid email address.'; err.style.display = 'block'; return; }
+
     btn.textContent = 'Logging in...'; btn.disabled = true;
-    if (errEl) errEl.style.display = 'none';
 
     try {
-      // Map tab label to role value
-      const roleMap = { 'admin': 'admin', 'property owner': 'owner', 'entrepreneur': 'entrepreneur' };
-      const role = Object.keys(roleMap).find(k => roleTab.includes(k));
-      const data = await AuthAPI.login(email, pass, roleMap[role] || 'entrepreneur');
-
-      // Route by role
-      const routes = { admin: 'src/pages/admin-dashboard.html', owner: 'src/pages/owner-dashboard.html', entrepreneur: 'src/pages/entrepreneur-dashboard.html' };
-      window.location.href = routes[data.user.role] || 'src/pages/listings.html';
-
-    } catch (e) {
-      // Fallback demo routing if backend not connected
-      if (e instanceof TypeError || e.message?.includes('fetch')) {
-        const demoRoutes = { 'admin': 'src/pages/admin-dashboard.html', 'property owner': 'src/pages/owner-dashboard.html', 'entrepreneur': 'src/pages/entrepreneur-dashboard.html' };
-        const route = Object.keys(demoRoutes).find(k => roleTab.includes(k));
-        window.location.href = demoRoutes[route] || 'src/pages/listings.html';
-      } else {
-        showLoginError(e.message || 'Invalid email or password.');
-        btn.textContent = 'Log In'; btn.disabled = false;
-      }
+      const role = await loginUser(email, pass);
+      const dest = { admin: 'src/pages/admin-dashboard.html', owner: 'src/pages/owner-dashboard.html', entrepreneur: 'src/pages/entrepreneur-dashboard.html' };
+      window.location.href = dest[role] || 'src/pages/listings.html';
+    } catch(e) {
+      err.textContent = e.message || 'Login failed. Please try again.';
+      err.style.display = 'block';
+      btn.textContent = 'Log In'; btn.disabled = false;
     }
   }
 
-  function showLoginError(msg) {
-    let el = document.getElementById('login-error');
-    if (!el) {
-      el = document.createElement('div');
-      el.id = 'login-error';
-      el.style.cssText = 'background:#fee2e2;color:#dc2626;padding:0.6rem 0.9rem;border-radius:8px;font-size:0.85rem;margin-bottom:0.5rem;';
-      document.querySelector('#login-modal .btn-submit').before(el);
-    }
-    el.textContent = msg; el.style.display = 'block';
-  }
+  // Register
+  async function doRegister() {
+    const fn      = document.getElementById('r-fn').value.trim();
+    const mi      = document.getElementById('r-mi').value.trim();
+    const ln      = document.getElementById('r-ln').value.trim();
+    const age     = document.getElementById('r-age').value;
+    const bday    = document.getElementById('r-bday').value;
+    const email   = document.getElementById('r-email').value.trim();
+    const pass    = document.getElementById('r-pass').value;
+    const confirm = document.getElementById('r-confirm').value;
+    const terms   = document.getElementById('r-terms').checked;
+    const name    = mi ? `${fn} ${mi}. ${ln}` : `${fn} ${ln}`;
 
-  // ── Real API Register ─────────────────────────────────────────────────────
-  async function handleRegister() {
-    const name  = document.querySelector('#register-modal input[type=text]').value.trim();
-    const email = document.querySelector('#register-modal input[type=email]').value.trim();
-    const pass  = document.querySelector('#register-modal input[type=password]').value;
-    const brgy  = document.querySelector('#register-modal select').value;
-    const roleTab = document.querySelector('#register-modal .role-tab.active').textContent.toLowerCase();
-    const role  = roleTab.includes('owner') ? 'owner' : 'entrepreneur';
+    if (!fn || !ln)                              { alert('Please enter your first and last name.');       return; }
+    if (!age || parseInt(age) < 18)              { alert('You must be at least 18 to register.');        return; }
+    if (!bday)                                   { alert('Please enter your birthday.');                  return; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Please enter a valid email.');    return; }
+    if (pass.length < 6)                         { alert('Password must be at least 6 characters.');     return; }
+    if (pass !== confirm)                        { alert('Passwords do not match!');                     return; }
+    if (!terms)                                  { alert('Please agree to the Terms of Service.');       return; }
 
-    if (!name || !email || !pass) { alert('Please fill in all required fields.'); return; }
-
-    const btn = document.querySelector('#register-modal .btn-submit');
-    btn.textContent = 'Creating account...'; btn.disabled = true;
+    const btn = document.querySelector('#reg-overlay .btn-reg');
+    btn.textContent = 'Creating...'; btn.disabled = true;
 
     try {
-      await AuthAPI.register({ name, email, password: pass, password_confirmation: pass, role, barangay: brgy });
-      const routes = { owner: 'src/pages/owner-dashboard.html', entrepreneur: 'src/pages/entrepreneur-dashboard.html' };
-      window.location.href = routes[role];
-    } catch (e) {
-      if (e instanceof TypeError || e.message?.includes('fetch')) {
-        // Demo fallback
-        alert('✅ Account created! (Demo mode — backend not connected yet)');
-        switchModal('register', 'login');
-      } else {
-        alert(e.message || 'Registration failed. Please try again.');
-      }
-      btn.textContent = 'Create Account'; btn.disabled = false;
+      await registerUser({ name, email, password: pass, password_confirmation: confirm, role: currentRole });
+      document.getElementById('reg-foot').innerHTML = `
+        <div style="text-align:center;padding:1rem 0;">
+          <div style="font-size:2.5rem;margin-bottom:0.5rem;">🎉</div>
+          <div style="font-weight:600;color:#1b4332;font-size:1rem;margin-bottom:0.3rem;">Account Created!</div>
+          <div style="font-size:0.82rem;color:#6b7280;margin-bottom:1rem;">You can now log in with your credentials.</div>
+          <button class="btn-reg" onclick="hideReg();showLogin()">Go to Login →</button>
+        </div>`;
+    } catch(e) {
+      alert(e.message || 'Registration failed. Please try again.');
+      btn.textContent = 'Create account'; btn.disabled = false;
     }
   }
-
-  // Close modal on overlay click
-  document.querySelectorAll('.modal-overlay').forEach(o => {
-    o.addEventListener('click', e => { if(e.target===o) o.classList.remove('active'); });
-  });
 
   renderCards(listings);
 </script>
