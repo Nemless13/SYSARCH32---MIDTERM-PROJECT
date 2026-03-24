@@ -29,7 +29,7 @@ It connects **property owners**, **local entrepreneurs**, and **LGU administrato
 | Marvin Calvez | Team Lead / Project Manager (PM) |
 | Kylar Covy Bihag | Solution Architect / Integrator |
 | Junnel Montellano | Business Analyst / Research Lead |
-| Kier Keir Gom-os | Documentation & Pitch |
+| Keir P. Gom-os | Documentation & Pitch |
 
 ---
 
