@@ -172,9 +172,9 @@ http://localhost:8000
 
 | Role | Email | Password |
 |------|-------|----------|
-| Admin | admin@rentnow.com | *(set by team)* |
-| Property Owner | owner@rentnow.com | *(set by team)* |
-| Entrepreneur | user@rentnow.com | *(set by team)* |
+| Admin | admin@rentnow.com | @dminp@ssword |
+| Property Owner | maria@rentnow.com | owner1234 |
+| Entrepreneur | ana@rentnow.com | user1234 |
 
 ---
 
@@ -232,5 +232,11 @@ This project supports **SDG 8 — Decent Work and Economic Growth** by:
 This project is for academic purposes only — SYSARCH32 Midterm, 2025.
 
 ---
+## 👨‍💻 Team Contributions
+
+<!-- Marvin Calvez - Team Lead / PM - Frontend & Full Stack -->
+<!-- Kylar Covy Bihag - Solution Architect / Integrator -->
+<!-- Junnel R. Montellano - Business Analyst / Research Lead -->
+<!-- Kier P. Gom-os - Documentation & Pitch Lead -->
 
 *Built with ❤️ by KALUY-E TEAM — UCLM, Mandaue City, Cebu*
