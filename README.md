@@ -27,9 +27,9 @@ It connects **property owners**, **local entrepreneurs**, and **LGU administrato
 | Name | Role |
 |------|------|
 | Marvin Calvez | Team Lead / Full Stack |
-| Junnel Montellano | Backend Developer |
-| Kylar Covy Bihag | Frontend Developer |
-| Kier Keir Gom-os | Database / Documentation |
+| Kylar Covy Bihag | Solution Architect / Integrator |
+| Kier Keir Gom-os | Business Analyst / Research Lead |
+| Junnel Montellano | Documentation & Pitch |
 
 ---
 
@@ -215,7 +215,15 @@ This project supports **SDG 8 — Decent Work and Economic Growth** by:
 
 ## 📸 Screenshots
 
-> *(Add screenshots of your running prototype here)*
+> Landing Page
+![landing page](https://github.com/user-attachments/assets/b5cb5a57-a032-4f94-9b06-6a64e1d19808)
+![log in](https://github.com/user-attachments/assets/fe712971-55f0-4fdd-98c2-27e83ee89c14)
+![admindashboard](https://github.com/user-attachments/assets/19c1f966-54ce-4dc6-a3f1-2f2509b38148)
+![ownerdashboard](https://github.com/user-attachments/assets/d455a920-828d-4ffe-b674-bdb37aa6c27b)
+![userdashboard](https://github.com/user-attachments/assets/9cf56094-4035-4e51-8848-a9505b17a986)
+
+
+
 
 ---
 
@@ -225,4 +233,4 @@ This project is for academic purposes only — SYSARCH32 Midterm, 2025.
 
 ---
 
-*Built with ❤️ by KALUY-E TEAM — Mandaue City, Cebu*
+*Built with ❤️ by KALUY-E TEAM — UCLM, Mandaue City, Cebu*
