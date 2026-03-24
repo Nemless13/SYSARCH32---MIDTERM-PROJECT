@@ -1,6 +1,6 @@
 # 🏠 RentNow — Business Closure Tracking & Rental Listing System
 
-> **SYSARCH32 Midterm Project** | KALUY-E TEAM | Mandaue City, Cebu
+> **SYSARCH32 Midterm Project** | KALUY-E TEAM | UCLM
 
 ![RentNow Banner](https://img.shields.io/badge/RentNow-Business%20Tracker-2d6a4f?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-In%20Development-f4a261?style=for-the-badge)
@@ -239,4 +239,4 @@ This project is for academic purposes only — SYSARCH32 Midterm, 2025.
 <!-- Junnel R. Montellano - Business Analyst / Research Lead -->
 <!-- Kier P. Gom-os - Documentation & Pitch Lead -->
 
-*Built with ❤️ by KALUY-E TEAM — UCLM, Mandaue City, Cebu*
+*Built with ❤️ by KALUY-E TEAM — UCLM*
