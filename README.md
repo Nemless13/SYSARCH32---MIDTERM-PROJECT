@@ -12,12 +12,11 @@
 
 **RentNow** is a web-based system designed to address the lack of a centralized platform for tracking business closures and vacant commercial spaces in local barangay communities.
 
-It connects **property owners**, **local entrepreneurs**, and **LGU administrators** in one platform — making it easier to discover, list, and manage commercial rental spaces.
+It connects **property owners**, **local entrepreneurs**, in one platform — making it easier to discover, list, and manage commercial rental spaces.
 
 ### 🎯 Problem It Solves
 - No centralized system to track business closures in barangays
 - Vacant commercial spaces remain unused for long periods
-- LGUs lack accurate data on business sustainability
 - Entrepreneurs have difficulty finding available rental spaces
 
 ---
@@ -208,7 +207,7 @@ http://localhost:8000
 
 This project supports **SDG 8 — Decent Work and Economic Growth** by:
 - Empowering local entrepreneurs to find commercial spaces
-- Helping LGUs monitor business sustainability in their barangays
+- Helping community monitor business sustainability in their barangays
 - Reducing economic disruption caused by untracked business closures
 
 ---
